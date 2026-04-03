@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Montserrat', system-ui, sans-serif;
+  --color-primary: #7EB0D5;
+  --color-primary-dark: #5a9ac5;
+  --color-navy: #004172;
+  --color-navy-light: #005a9e;
+  --color-light-blue: #e8f4fd;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+}
