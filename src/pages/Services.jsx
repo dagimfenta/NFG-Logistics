@@ -73,13 +73,15 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Service Details — add service1.jpg … service4.jpg to /public */}
-      <section className="pb-24 px-4 lg:px-8 bg-white">
-        <div className="max-w-6xl mx-auto space-y-24 md:space-y-28">
+      {/* Service Details — photos: service1.png … service4.png */}
+      <section className="pb-20 px-4 lg:px-8 bg-white">
+        <div className="max-w-6xl mx-auto space-y-20">
           {services.map((service, index) => (
             <div
               key={index}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center"
+              className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
+                index % 2 === 1 ? 'lg:direction-rtl' : ''
+              }`}
             >
               <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
                 <service.icon
@@ -103,11 +105,11 @@ export default function Services() {
                 </ul>
               </div>
               <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                <div className="bg-light-blue rounded-xl overflow-hidden border border-primary/20 shadow-sm">
+                <div className="bg-light-blue rounded-lg overflow-hidden border border-primary/20">
                   <img
                     src={service.image}
                     alt=""
-                    className="w-full aspect-[4/3] md:aspect-[16/10] lg:min-h-[22rem] object-cover"
+                    className="w-full h-64 lg:h-80 object-cover"
                   />
                 </div>
               </div>
