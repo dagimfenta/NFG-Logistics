@@ -7,7 +7,7 @@
  * quotebackground.png
  * about1.png, about2.png, about3.png, aboutcta.png
  * servicescta.png
- * service1.png, service2.png, service3.png, service4.png
+ * service1.jpg … service4.jpg (Services page)
  */
 export const MEDIA = {
   logo1: '/logo1.png',
@@ -21,8 +21,8 @@ export const MEDIA = {
   about3: '/about3.png',
   aboutCta: '/aboutcta.png',
   servicesCta: '/servicescta.png',
-  service1: '/service1.png',
-  service2: '/service2.png',
-  service3: '/service3.png',
-  service4: '/service4.png',
+  service1: '/service1.jpg',
+  service2: '/service2.jpg',
+  service3: '/service3.jpg',
+  service4: '/service4.jpg',
 };
