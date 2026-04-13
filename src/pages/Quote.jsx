@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useForm, ValidationError } from '@formspree/react';
+import { FORMSPREE_FORM_ID } from '../constants/formspree';
 
 export default function Quote() {
   const [form, setForm] = useState({
@@ -11,15 +13,15 @@ export default function Quote() {
     destination: '',
     details: '',
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [state, handleSubmit] = useForm(FORMSPREE_FORM_ID, {
+    data: {
+      _subject: 'NFG Logistics — Quote request',
+      form: 'quote',
+    },
+  });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
   };
 
   return (
@@ -41,7 +43,7 @@ export default function Quote() {
       {/* Quote Form */}
       <section className="pb-20 px-4 lg:px-8 bg-white">
         <div className="max-w-2xl mx-auto">
-          {submitted ? (
+          {state.succeeded ? (
             <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
               <h3 className="text-lg font-semibold text-green-800 mb-2">
                 Quote Request Received!
@@ -72,6 +74,8 @@ export default function Quote() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-sm text-sm focus:outline-none focus:border-primary transition-colors"
                 />
               </div>
+              <ValidationError field="name" errors={state.errors} className="text-sm text-red-600 -mt-3" />
+              <ValidationError field="company" errors={state.errors} className="text-sm text-red-600 -mt-3" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <input
                   type="email"
@@ -92,6 +96,8 @@ export default function Quote() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-sm text-sm focus:outline-none focus:border-primary transition-colors"
                 />
               </div>
+              <ValidationError field="email" errors={state.errors} className="text-sm text-red-600 -mt-3" />
+              <ValidationError field="phone" errors={state.errors} className="text-sm text-red-600 -mt-3" />
               <select
                 name="serviceType"
                 value={form.serviceType}
@@ -105,6 +111,7 @@ export default function Quote() {
                 <option value="forwarding">Freight Forwarding</option>
                 <option value="warehousing">Warehousing &amp; Distribution</option>
               </select>
+              <ValidationError field="serviceType" errors={state.errors} className="text-sm text-red-600 -mt-3" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <input
                   type="text"
@@ -123,6 +130,8 @@ export default function Quote() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-sm text-sm focus:outline-none focus:border-primary transition-colors"
                 />
               </div>
+              <ValidationError field="origin" errors={state.errors} className="text-sm text-red-600 -mt-3" />
+              <ValidationError field="destination" errors={state.errors} className="text-sm text-red-600 -mt-3" />
               <textarea
                 name="details"
                 placeholder="Additional details about your shipment..."
@@ -131,11 +140,14 @@ export default function Quote() {
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-sm text-sm focus:outline-none focus:border-primary transition-colors resize-none"
               />
+              <ValidationError field="details" errors={state.errors} className="text-sm text-red-600 -mt-3" />
+              <ValidationError errors={state.errors} className="text-sm text-red-600" />
               <button
                 type="submit"
-                className="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3.5 rounded-sm transition-colors"
+                disabled={state.submitting}
+                className="w-full bg-primary hover:bg-primary-dark disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-sm transition-colors"
               >
-                Request Quote
+                {state.submitting ? 'Sending…' : 'Request Quote'}
               </button>
             </form>
           )}

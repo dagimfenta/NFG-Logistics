@@ -11,7 +11,6 @@ const services = [
       'Efficient and reliable transportation of goods over long distances with our well-maintained fleet and experienced drivers. Whether you need cross-country shipments or regional deliveries, our trucking services are designed to meet your needs with precision and care.',
     features: [
       'Full truckload (FTL) and less-than-truckload (LTL) options',
-      'Temperature-controlled transport available',
       'Real-time GPS tracking on all shipments',
       'Dedicated and experienced drivers',
     ],
@@ -49,7 +48,7 @@ const services = [
     description:
       'Secure warehousing and efficient inventory management for storing, managing, and delivering your goods to customers on time. Our state-of-the-art facilities ensure your products are handled with care.',
     features: [
-      'Climate-controlled storage options',
+      'Secure, organized warehouse space',
       'Inventory management systems',
       'Pick, pack, and ship services',
       'Flexible short and long-term storage',

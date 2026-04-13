@@ -1,17 +1,19 @@
 import { useState } from 'react';
+import { useForm, ValidationError } from '@formspree/react';
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import { FORMSPREE_FORM_ID } from '../constants/formspree';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
-  const [submitted, setSubmitted] = useState(false);
+  const [state, handleSubmit] = useForm(FORMSPREE_FORM_ID, {
+    data: {
+      _subject: 'NFG Logistics — Contact form',
+      form: 'contact',
+    },
+  });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
   };
 
   return (
@@ -31,7 +33,7 @@ export default function Contact() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Form */}
           <div>
-            {submitted ? (
+            {state.succeeded ? (
               <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
                 <h3 className="text-lg font-semibold text-green-800 mb-2">
                   Thank you for contacting us!
@@ -51,6 +53,11 @@ export default function Contact() {
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-sm text-sm focus:outline-none focus:border-primary transition-colors"
                 />
+                <ValidationError
+                  field="name"
+                  errors={state.errors}
+                  className="text-sm text-red-600 -mt-3"
+                />
                 <input
                   type="email"
                   name="email"
@@ -60,6 +67,11 @@ export default function Contact() {
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-sm text-sm focus:outline-none focus:border-primary transition-colors"
                 />
+                <ValidationError
+                  field="email"
+                  errors={state.errors}
+                  className="text-sm text-red-600 -mt-3"
+                />
                 <input
                   type="tel"
                   name="phone"
@@ -67,6 +79,11 @@ export default function Contact() {
                   value={form.phone}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-sm text-sm focus:outline-none focus:border-primary transition-colors"
+                />
+                <ValidationError
+                  field="phone"
+                  errors={state.errors}
+                  className="text-sm text-red-600 -mt-3"
                 />
                 <textarea
                   name="message"
@@ -77,11 +94,18 @@ export default function Contact() {
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-sm text-sm focus:outline-none focus:border-primary transition-colors resize-none"
                 />
+                <ValidationError
+                  field="message"
+                  errors={state.errors}
+                  className="text-sm text-red-600 -mt-3"
+                />
+                <ValidationError errors={state.errors} className="text-sm text-red-600" />
                 <button
                   type="submit"
-                  className="w-full sm:w-auto bg-primary hover:bg-primary-dark text-white font-semibold px-12 py-3 rounded-sm transition-colors"
+                  disabled={state.submitting}
+                  className="w-full sm:w-auto bg-primary hover:bg-primary-dark disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold px-12 py-3 rounded-sm transition-colors"
                 >
-                  Submit
+                  {state.submitting ? 'Sending…' : 'Submit'}
                 </button>
               </form>
             )}
@@ -107,13 +131,13 @@ export default function Contact() {
                   <div className="flex items-center gap-3">
                     <Mail size={16} className="text-primary flex-shrink-0" />
                     <a href="mailto:info@nfglogistics.net" className="text-sm text-primary hover:text-primary-dark transition-colors">
-                      info@nfglogistics.com
+                      info@nfglogistics.net
                     </a>
                   </div>
                   <div className="flex items-center gap-3">
                     <Phone size={16} className="text-primary flex-shrink-0" />
-                    <a href="tel:+18652903227" className="text-sm text-gray-600 hover:text-primary transition-colors">
-                      +1 865-290-3227
+                    <a href="tel:+1 629-345-1110" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                      +1 629-345-1110
                     </a>
                   </div>
                   <div className="flex items-center gap-3">
